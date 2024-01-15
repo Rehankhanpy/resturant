@@ -1,3 +1,6 @@
+from django.shortcuts import render
+
+
 site_details = {
        'name':'Restaurant',
        # 'year':date.today.year(),
