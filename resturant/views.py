@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import menu_items, Category
+from .models import menu_items, Category, account
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django.contrib import messages
@@ -43,12 +43,18 @@ def signup(request):
                             messages.success(request, 'Account created successfully')  
 
                             username = request.POST["username"]
+                            email = request.POST["email"]
+                            phone_number = request.POST["phone_number"]
                             password1 = request.POST["password1"]
+                            password2 = request.POST["password2"]
 
-                            user = authenticate(request, username=username, password=password1)
-                            if user is not None:
-                                   login(request, user)
-                                   return redirect('/')
+                            if password1 == password2:
+                                   user = account.objects.create_user(username=username, password=password1, email=email)
+                                   user.phone_number = phone_number
+                                   user.is_active = True
+                                   user.save()
+                            else:
+                                   messages.error(request, 'Passwords Are Not Same')
                             
                      else:
                             for errors in form.errors.items():
