@@ -16,26 +16,36 @@
       </div>
     
           <div class="form_container">
-            <form action="{% url 'book' %} " method="post">
+            <form action="" method="post">
               {% csrf_token %}
               <div>
-                <input type="text" class="form-control" name="name" placeholder="Your Name" />
+                <label class="form-label">Username</label>
+                {{form.username}}
               </div>
               <div>
-                <input type="text" class="form-control" name="phone" placeholder="Phone Number" />
+                <label class="form-label">Email address</label>
+                {{form.email}}
               </div>
               <div>
-                <input type="email" class="form-control" name="email" placeholder="Your Email" />
+                <label class="form-label">First Name</label>
+                {{form.first_name}}
               </div>
               <div>
-                <input type="text" class="form-control" name="persons" placeholder="How many Person's" />
+                <label class="form-label">Last Name</label>
+                {{form.last_name}}
               </div>
               <div>
-                <input type="date" name="date" class="form-control">
+                <label class="form-label">Password</label>
+                {{form.password1}}
+                
               </div>
+              <div>
+                 <label class="form-label">ReEnter Password</label>
+                {{form.password2}}
+                </div>
               <div class="btn_box">
                 <button type="submit">
-                  Book Now
+                  Sign Up
                 </button>
               </div>
             </form>

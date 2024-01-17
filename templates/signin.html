@@ -11,31 +11,24 @@
     <div class="container">
       <div class="heading_container">
         <h2>
-          Register an Account
+          Log Into Your Account
         </h2>
       </div>
-    
           <div class="form_container">
-            <form action="{% url 'book' %} " method="post">
+            <form action="{% url 'signin' %}" method="post">
               {% csrf_token %}
               <div>
-                <input type="text" class="form-control" name="name" placeholder="Your Name" />
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="Your Username" />
               </div>
               <div>
-                <input type="text" class="form-control" name="phone" placeholder="Phone Number" />
+                <label class="form-label">Password</label>
+                <input type="Password" class="form-control" name="password" placeholder="Your Password" />
               </div>
-              <div>
-                <input type="email" class="form-control" name="email" placeholder="Your Email" />
-              </div>
-              <div>
-                <input type="text" class="form-control" name="persons" placeholder="How many Person's" />
-              </div>
-              <div>
-                <input type="date" name="date" class="form-control">
-              </div>
+
               <div class="btn_box">
                 <button type="submit">
-                  Book Now
+                  Sign In
                 </button>
               </div>
             </form>
