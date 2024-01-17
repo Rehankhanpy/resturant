@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import menu_items
+from .models import menu_items, Category
 
 
 site_details = {
@@ -17,9 +17,11 @@ def about(request):
 
 def menu(request):
        items = menu_items.objects.all()
+       categories = Category.objects.all()
        return render(request, 'menu.html', {
               'site_details':site_details,
               'items':items,
+              'categories':categories,
        })
 
 def book(request):

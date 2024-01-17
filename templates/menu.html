@@ -20,16 +20,15 @@
 
       <ul class="filters_menu">
         <li class="active" data-filter="*">All</li>
-        <li data-filter=".Burger">Burger</li>
-        <li data-filter=".Pizza">Pizza</li>
-        <li data-filter=".Pasta">Pasta</li>
-        <li data-filter=".Fries">Fries</li>
+        {% for category in categories %}
+        <li data-filter=".{{category.name}}">{{ category.name}}</li>
+        {% endfor %}
       </ul>
 
       <div class="filters-content">
         <div class="column grid">
           {% for item in items %}
-          <div class="col-sm-6 col-lg-4 all pizza {{item.category}}">
+          <div class="col-sm-6 col-lg-4 all pizza {{item.menu_category}}">
             
             <div class="box">
               <div>
