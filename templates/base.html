@@ -32,6 +32,11 @@
   <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
 </head>
+<style>
+  .alert-error{
+    background-color: #f8d7da;
+  }
+</style>
 
 <body>
 
@@ -139,8 +144,14 @@
         </nav>
       </div>
     </header>
-    
 
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}}" role="alert">
+      {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
 
     {% block content %}
 
