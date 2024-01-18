@@ -60,16 +60,16 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  mx-auto ">
-              <li class="nav-item active">
+              <li class="nav-item home">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item menu">
                 <a class="nav-link" href="{% url 'menu' %}">Menu</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item about">
                 <a class="nav-link" href="{% url 'about' %}">About</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item book">
                 <a class="nav-link" href="{% url 'book' %}">Book Table</a>
               </li>
             </ul>
@@ -238,8 +238,6 @@
   </footer>
   <!-- footer section -->
 
-
-
   <!-- jQery -->
   <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
   <!-- popper js -->
@@ -260,6 +258,12 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
   </script>
   <!-- End Google Map -->
+
+
+  {% block js %}
+
+  {% endblock %}
+
 
 </body>
 
