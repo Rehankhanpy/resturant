@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import account
 
-class SignUpForm(UserCreationForm):
+class SignUpForm(forms.ModelForm):
     username = forms.CharField(max_length=100)
     email = forms.EmailField(max_length=150)
     phone_number = forms.CharField(max_length=40)
@@ -46,3 +46,6 @@ class SignUpForm(UserCreationForm):
         model = account
         fields = ['username', 'email', 'phone_number', 'password1', 'password2']
     
+
+
+

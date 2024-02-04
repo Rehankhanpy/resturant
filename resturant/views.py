@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import menu_items, Category, account
+from .models import menu_items, Category, account, Table, book_table
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django.contrib import messages
@@ -28,7 +28,34 @@ def menu(request):
               'categories':categories,
        })
 
+
+
+def _create_table(request):
+       Table = request.session.session_key
+       if not Table:
+              Table = request.session.create()
+       return Table
+
+
+
 def book(request):
+       if request.method == 'POST':
+              date      = request.POST['datetime']
+              no_of_ppl = request.POST['no_of_people']
+              
+
+              table = book_table.objects.create(
+                     reserved_for = request.user,
+                     sheduled_for = date,
+                     people       = no_of_ppl,
+
+              )
+              table.save()
+              
+              messages.success(request, 'Table Booked Successfully :)')
+              return redirect('/')
+              
+
        return render(request, 'book.html', {'site_details':site_details})
 
 def signup(request):
@@ -39,8 +66,6 @@ def signup(request):
               if request.method == 'POST':  
                      form = SignUpForm(request.POST)  
                      if form.is_valid():  
-                            form.save()  
-                            messages.success(request, 'Account created successfully')  
 
                             username = request.POST["username"]
                             email = request.POST["email"]
@@ -49,10 +74,14 @@ def signup(request):
                             password2 = request.POST["password2"]
 
                             if password1 == password2:
+                                   #form.save()  
+
                                    user = account.objects.create_user(username=username, password=password1, email=email)
                                    user.phone_number = phone_number
                                    user.is_active = True
                                    user.save()
+                                   messages.success(request, 'Account created successfully')  
+
                             else:
                                    messages.error(request, 'Passwords Are Not Same')
                             
@@ -72,10 +101,12 @@ def signin(request):
               if request.method == 'POST':
                      username = request.POST["username"]
                      password = request.POST["password"]
+                     email = request.POST["email"]
+                     print(username, email, password)
 
-                     user = authenticate(request, username=username, password=password)
-                     if user is not None:
-                            login(request, user)
+                     User = authenticate(request, email=email, password=password)
+                     if User is not None:
+                            login(request, User)
                             messages.success(request, 'Logged In Successfully')
                             return redirect('/')
                      else:

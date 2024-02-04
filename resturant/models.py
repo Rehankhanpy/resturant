@@ -10,12 +10,12 @@ class Category(models.Model):
               return self.name
 
 class menu_items(models.Model):
-       name = models.CharField(max_length=50, blank=False)
-       price = models.IntegerField()
+       name          = models.CharField(max_length=50, blank=False)
+       price         = models.IntegerField()
        menu_category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
-       is_avalaible = models.BooleanField(default=True)
-       description = models.TextField(max_length=300)
-       image = models.ImageField(upload_to='images/menu_items_images', blank=True)
+       is_avalaible  = models.BooleanField(default=True)
+       description   = models.TextField(max_length=300)
+       image         = models.ImageField(upload_to='images/menu_items_images', blank=True)
 
        def __str__(self):
               return self.name
@@ -30,7 +30,7 @@ class MyAccountManager(BaseUserManager):
 
               user = self.model(
                      email = self.normalize_email(email),
-                     usernaame = username,
+                     username = username,
                      
               )
 
@@ -41,15 +41,15 @@ class MyAccountManager(BaseUserManager):
        
        def create_superuser(self, username, email, password):
               user = self.create_user(
-                     email = self.normalize_email(email),
+                     email    = self.normalize_email(email),
                      username = username,
                      password = password,
               )
        
-              user.is_admin = True
-              user.is_active = True
-              user.is_superadmin = True
-              user.is_staff = True
+              user.is_admin        = True
+              user.is_active       = True
+              user.is_superadmin   = True
+              user.is_staff        = True
 
               user.save(using=self._db)
               return user
@@ -62,21 +62,40 @@ class account(AbstractBaseUser):
        date_joined   = models.DateTimeField(auto_now_add=True)
        last_login    = models.DateTimeField(auto_now_add=True)
        is_admin      = models.BooleanField(default=False)
+       is_active     = models.BooleanField(default=True)
        is_superadmin = models.BooleanField(default=False)
        is_staff      = models.BooleanField(default=False)
        is_admin      = models.BooleanField(default=False)
 
        USERNAME_FIELD  = 'email'
-       REQUIRED_FIELDS = ['username', 'email']
+       REQUIRED_FIELDS = ['username']
 
        objects = MyAccountManager()
 
        def __str__(self):
               return self.email
        
-       def has_perms(self, perm, obj=None):
+       def has_perm(self, perm, obj=None):
               return self.is_admin
        
        def has_module_perms(self, add_label):
               return True
+       
+
+
+class Table(models.Model):
+       no_of_tables = models.IntegerField()
+
+       def __str__(self):
+              return self.no_of_tables
+       
+
+
+class book_table(models.Model):
+       reserved_for = models.ForeignKey(account, on_delete=models.SET_NULL, null=True, blank=True)
+       created_at   = models.DateTimeField(auto_now_add=True)
+       people       = models.IntegerField()
+       sheduled_for = models.DateTimeField(null=True, blank=True, unique=True)
+       
+       
        
